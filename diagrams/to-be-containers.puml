@@ -1,0 +1,96 @@
+@startuml
+title Cinemaabyss Container Diagram
+
+left to right direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "User", "A user of Cinemaabyss application")
+System(CinemaabyssApp, "Cinemaabyss application", "Streaming platform")
+
+Container_Boundary(CinemaabyssApp, "Cinemaabyss application") {
+  Container(WebApp, "Web Application", "React", "Handles user interactions")
+  Container(MobileApp, "Mobile Application", "React Native", "Handles user interactions")
+  Container(SmartTvApp, "Smart TV Application", "React Native", "Handles user interactions")
+  Container(ApiGateway, "API Gateway", "Go")
+'  BFF
+  Container(BFF, "Web / Mobile / Smart TV BFF", "Go")
+'  services
+  Container(AuthServ, "Auth Service", "Go", "Identification and access management") {
+    ContainerDb(AuthDB, "Auth DB", "", "")
+  }
+  Container(UserServ, "User Service", "Go", "Manages user related data") {
+    ContainerDb(UserDB, "User DB", "", "")
+  }
+  Container(MoviesServ, "Movies Service", "Go", "Manages video related data") {
+    ContainerDb(MoviesDB, "Movies DB", "", "")
+  }
+  Container(RecommendationServ, "Recommendation Service", "Go", "Manages recommendations") {
+    ContainerDb(RecommendationDB, "Recommendation DB", "", "")
+  }
+  Container(PaymentServ, "Payment Service", "Go", "Manages payments") {
+    ContainerDb(PaymentDB, "Payment DB", "", "")
+  }
+  Container(DiscountServ, "Discount Service", "Go", "Manages discounts") {
+    ContainerDb(DiscountDB, "Discount DB", "", "")
+  }
+  Container(SubscriptionServ, "Subscription Service", "Go", "Manages subscriptions") {
+    ContainerDb(SubscriptionDB, "Subscription DB", "", "")
+  }
+  Container(VideoServ, "Video Processing Service", "Go", "Filtering, Format and resolution conversion") {
+    ContainerDb(VideoDB, "Video Processing DB", "", "")
+  }
+'  queues
+  ContainerQueue(UserInfoQueue, "User Info Queue", "Kafka")
+  ContainerQueue(MovieInfoQueue, "Movie Info Queue", "Kafka")
+  ContainerQueue(PaymentRequestQueue, "Payment Request Queue", "Kafka")
+  ContainerQueue(PaymentResponseQueue, "Payment Response Queue", "Kafka")
+  ContainerQueue(SubscriptionInfoQueue, "Subscription Info Queue", "Kafka")
+}
+
+System_Ext(PaymentSys, "Payment System", "Processes payments")
+System_Ext(ExtStreamingServ, "Streaming services", "Provide content")
+System_Ext(S3, "S3", "Stores video content")
+System_Ext(RecommendationSys, "Recommendation System", "Provides recommendation", "")
+
+Rel(user, WebApp, "Uses")
+Rel(user, MobileApp, "Uses")
+Rel(user, SmartTvApp, "Uses")
+Rel(WebApp, ApiGateway, "Requests")
+Rel(MobileApp, ApiGateway, "Requests")
+Rel(SmartTvApp, ApiGateway, "Requests")
+Rel(ApiGateway, BFF, "Requests")
+
+Rel(BFF, AuthServ, "Checks identity")
+Rel(BFF, UserServ, "Manages user profile")
+Rel(BFF, RecommendationServ, "Gets recommendations")
+Rel(BFF, MoviesServ, "Gets info about movies")
+Rel(BFF, DiscountServ, "Gets info about discounts")
+Rel(BFF, SubscriptionServ, "Manages subscription")
+Rel(BFF, VideoServ, "Receives video")
+Rel(BFF, PaymentServ, "Manages payments")
+
+Rel(UserServ, UserInfoQueue, "Produces user views, ratings, etc")
+Rel(RecommendationServ, UserInfoQueue, "Consumes user views, ratings, etc")
+Rel(DiscountServ, UserInfoQueue, "Consumes user views, ratings, etc")
+Rel(MoviesServ, MovieInfoQueue, "Produces movies meta info")
+Rel(RecommendationServ, MovieInfoQueue, "Consumes movies meta info")
+Rel(SubscriptionServ, SubscriptionInfoQueue, "Produces subscription info")
+Rel(DiscountServ, SubscriptionInfoQueue, "Consumes subscription info")
+Rel(SubscriptionServ, PaymentRequestQueue, "Requests payments to prolong subscription")
+Rel(SubscriptionServ, PaymentResponseQueue, "Consumes payments info")
+Rel(PaymentServ, PaymentRequestQueue, "Consumes payment requests")
+Rel(PaymentServ, PaymentResponseQueue, "Produces payments info")
+
+Rel(RecommendationServ, RecommendationSys, "Receives recommendations", RabbitMQ)
+Rel(VideoServ, S3, "Receives video")
+Rel(VideoServ, ExtStreamingServ, "Receives video")
+Rel(MoviesServ, ExtStreamingServ, "Gets info about movies")
+Rel(PaymentServ, PaymentSys, "Executes payments")
+
+UserInfoQueue -[hidden]-> RecommendationSys
+MovieInfoQueue -[hidden]-> S3
+PaymentRequestQueue -[hidden]-> PaymentSys
+PaymentRequestQueue -[hidden]-> ExtStreamingServ
+
+@enduml
