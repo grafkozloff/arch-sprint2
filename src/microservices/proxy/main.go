@@ -23,19 +23,19 @@ func main() {
     port := getEnv("PORT", "8000")
 	monolithURL, err := url.Parse(getEnv("MONOLITH_URL", "http://monolith:8080"))
 	if err != nil {
-		log.Fatal("Invalid MONOLITH_URL value")
+		log.Fatal("Cannot parse monolith URL")
 	}
 	moviesServiceURL, err := url.Parse(getEnv("MOVIES_SERVICE_URL", "http://movies-service:8081"))
 	if err != nil {
-		log.Fatal("Invalid MOVIES_SERVICE_URL value")
+		log.Fatal("Cannot parse movies service URL")
 	}
 	eventsServiceURL, err := url.Parse(getEnv("EVENTS_SERVICE_URL", "http://events-service:8082"))
 	if err != nil {
-		log.Fatal("Invalid EVENTS_SERVICE_URL value")
+		log.Fatal("Cannot parse events service URL")
 	}
 	migrationPercent, err := strconv.Atoi(getEnv("MOVIES_MIGRATION_PERCENT", "50"))
 	if err != nil {
-		log.Fatal("Invalid MOVIES_MIGRATION_PERCENT value")
+		log.Fatal("Invalid migration percent value")
 	}
 	gradualMigration := getEnv("GRADUAL_MIGRATION", "true") == "true"
 
@@ -45,11 +45,16 @@ func main() {
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
     	w.WriteHeader(http.StatusOK)
-    	w.Write([]byte("OK"))
+    	w.Write([]byte("Strangler Fig Proxy is healthy"))
     })
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 	    log.Printf("Request: %s %s", r.Method, r.URL.Path)
+
+        if strings.Contains(r.URL.Path, "/api/events") {
+            eventsServiceProxy.ServeHTTP(w, r)
+			return
+        }
 
 		if !gradualMigration {
 			monolithProxy.ServeHTTP(w, r)
@@ -57,13 +62,7 @@ func main() {
 		}
 
 		if rand.Intn(100) < migrationPercent {
-            if strings.Contains(r.URL.Path, "/api/events") {
-                eventsServiceProxy.ServeHTTP(w, r)
-            } else if strings.Contains(r.URL.Path, "/api/movies") {
-                moviesServiceProxy.ServeHTTP(w, r)
-            } else {
-        		monolithProxy.ServeHTTP(w, r)
-            }
+            moviesServiceProxy.ServeHTTP(w, r)
         } else {
     		monolithProxy.ServeHTTP(w, r)
         }
