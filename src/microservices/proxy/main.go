@@ -56,7 +56,7 @@ func main() {
 			return
         }
 
-		if !gradualMigration {
+		if !gradualMigration || !strings.Contains(r.URL.Path, "/api/movies") {
 			monolithProxy.ServeHTTP(w, r)
 			return
 		}
