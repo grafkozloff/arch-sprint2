@@ -1,0 +1,330 @@
+{
+	"id": "d1d068e2-c4b4-4d17-a738-03a6e726af63",
+	"name": "CinemaAbyss API",
+	"timestamp": "2025-06-03T20:22:04.842Z",
+	"collection_id": "29240087-3f4c27c6-16ce-48e1-900d-0e4cf9ef5690",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": "100",
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-06-03T20:22:01.673Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "4238b59f-b06f-47aa-b98f-60d2e301e90e",
+			"name": "Проверка работоспособности API Gateway",
+			"url": "http://localhost:8000/health",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				6
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "bbf89852-2f1e-4f5b-b66c-d2bce2551b42",
+			"name": "Проверка работоспособности микросервиса фильмов",
+			"url": "http://localhost:8000/api/movies/health",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				7
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "cf8cb033-312f-4747-a7cf-91d2811a54a9",
+			"name": "Получение списка всех фильмов",
+			"url": "http://localhost:8000/api/movies",
+			"time": 19,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				19
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "d77ca930-477b-4a42-bc56-56db0823c525",
+			"name": "Создание нового фильма",
+			"url": "http://localhost:8000/api/movies",
+			"time": 19,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				19
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "42e38429-7ae3-43ed-a962-91ecc60b4b8c",
+			"name": "Получение списка всех пользователей",
+			"url": "http://localhost:8000/api/users",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				8
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "0baf6608-8ae4-40a2-a1d6-caca559f7e4e",
+			"name": "Создание нового пользователя",
+			"url": "http://localhost:8000/api/users",
+			"time": 14,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				14
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "6e134c12-4f9c-4319-bd96-57bae0fa6710",
+			"name": "Получение списка всех платежей",
+			"url": "http://localhost:8000/api/payments?user_id=-17488832",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				8
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "05d9baa6-a259-4631-9d4f-cfa6633f9cb0",
+			"name": "Создание нового платежа",
+			"url": "http://localhost:8000/api/payments",
+			"time": 14,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				14
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "dae09239-f8cc-4b47-b5cb-462fdcc67983",
+			"name": "Получение списка всех подписок",
+			"url": "http://localhost:8000/api/subscriptions?user_id=-17488832",
+			"time": 7,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				7
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4e2fda66-9d60-401c-b3b3-24df89a7b9c8",
+			"name": "Создание новой подписки",
+			"url": "http://localhost:8000/api/subscriptions",
+			"time": 15,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				15
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "1c06f4f1-e275-4bd5-9d84-dfe1772ac783",
+			"name": "Проверка работоспособности микросервиса событий",
+			"url": "http://localhost:8000/api/events/health",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				8
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "5428f15c-e2b7-4b04-baad-17089c1aeb2c",
+			"name": "Создание события фильма",
+			"url": "http://localhost:8000/api/events/movie",
+			"time": 48,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				48
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "4f84c66c-44a8-4038-b0d7-f4231f0efe5d",
+			"name": "Создание события пользователя",
+			"url": "http://localhost:8000/api/events/user",
+			"time": 17,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				17
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "cc2d2bac-8b5e-4d28-bba9-d5bcfbb6d541",
+			"name": "Создание события платежа",
+			"url": "http://localhost:8000/api/events/payment",
+			"time": 18,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				18
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 208,
+	"collection": {
+		"requests": [
+			{
+				"id": "4238b59f-b06f-47aa-b98f-60d2e301e90e",
+				"method": "GET"
+			},
+			{
+				"id": "bbf89852-2f1e-4f5b-b66c-d2bce2551b42",
+				"method": "GET"
+			},
+			{
+				"id": "cf8cb033-312f-4747-a7cf-91d2811a54a9",
+				"method": "GET"
+			},
+			{
+				"id": "d77ca930-477b-4a42-bc56-56db0823c525",
+				"method": "POST"
+			},
+			{
+				"id": "42e38429-7ae3-43ed-a962-91ecc60b4b8c",
+				"method": "GET"
+			},
+			{
+				"id": "0baf6608-8ae4-40a2-a1d6-caca559f7e4e",
+				"method": "POST"
+			},
+			{
+				"id": "6e134c12-4f9c-4319-bd96-57bae0fa6710",
+				"method": "GET"
+			},
+			{
+				"id": "05d9baa6-a259-4631-9d4f-cfa6633f9cb0",
+				"method": "POST"
+			},
+			{
+				"id": "dae09239-f8cc-4b47-b5cb-462fdcc67983",
+				"method": "GET"
+			},
+			{
+				"id": "4e2fda66-9d60-401c-b3b3-24df89a7b9c8",
+				"method": "POST"
+			},
+			{
+				"id": "1c06f4f1-e275-4bd5-9d84-dfe1772ac783",
+				"method": "GET"
+			},
+			{
+				"id": "5428f15c-e2b7-4b04-baad-17089c1aeb2c",
+				"method": "POST"
+			},
+			{
+				"id": "4f84c66c-44a8-4038-b0d7-f4231f0efe5d",
+				"method": "POST"
+			},
+			{
+				"id": "cc2d2bac-8b5e-4d28-bba9-d5bcfbb6d541",
+				"method": "POST"
+			}
+		]
+	}
+}
